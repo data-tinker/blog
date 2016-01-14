@@ -1,0 +1,4 @@
+*.pyc
+*.sock
+*.un~
+blog/static/js/metrika.js

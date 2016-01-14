@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+#sudo chkconfig --add monkeyd
+#become sudo
+#if [ $(id -u) != "0" ]
+#then
+#    sudo "$0" "$@"
+#    exit $?
+#fi
+
+case "$1" in
+    start)
+        #start process in background and write to log
+        cd /home/www-user/www/blog
+        nohup gunicorn --workers 3 --reload --bind unix:blog.sock blog:app >> /var/log/blog/access.log 2>&1 &
+        ;;
+    stop)
+        #kill process (you can use pkill)
+        ps aux | grep -E 'blog:app'  | grep -v grep | awk {'print $2'} | xargs kill -15
+        ;;
+    status)
+        ps aux | grep -E 'blog:app' | grep -vq grep && echo 'started' || echo 'stopped'
+        ;;
+esac
+
+exit 0

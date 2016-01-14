@@ -1,0 +1,30 @@
+<html>
+    <head>
+    <title>Year count</title>
+    </head>
+<body>
+    <style type="text/css">
+    input{
+        text-align:center;
+    }
+    </style>
+    <center>
+        <h1><font size="5"><font color=red>Y</font>ear count</font></h1>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+        <script>window.jQuery || document.write('<script src="{{
+        url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+        <script type=text/javascript>
+        function yearCalculate(e){
+            if (e.keyCode == 13) {
+                var current_year =  new Date().getFullYear();
+                $("#result").text((current_year - document.getElementById('diff').value));
+                $('#result').show()
+            }
+        }
+        </script>
+        <p><input type="text" id="diff" size=7  onkeypress="return yearCalculate(event)" />
+        <br><br>
+        <span id=result>2016</span>
+    <center>
+</body>
+</html>

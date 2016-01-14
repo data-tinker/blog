@@ -1,0 +1,11 @@
+[Unit]
+Description=Blog app
+
+[Service]
+Type=oneshot
+ExecStart=/etc/init.d/blog start
+ExecStop=/etc/init.d/blog stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
