@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from flask import Flask, request, redirect, url_for, send_from_directory, render_template, jsonify
+from flask.ext.responses import json_response, xml_response, auto_response
 from datetime import date
 from datetime import datetime
 from urlparse import urlparse, urlunparse
@@ -17,6 +18,10 @@ def index():
 @app.route('/tutorial')
 def tutorial():
     return redirect('http://178.79.163.43:5000', code=302)
+
+@app.route('/hi.json')
+def json_test():
+    return json_response({'name': 'Alex', 'message': 'hi!'}, status_code=201)
 
 @app.route('/timestamp')
 def timestamp_render():
