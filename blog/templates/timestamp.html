@@ -10,7 +10,7 @@ $(document).ready(function () {
 
 <style>
 @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
-    .panel-body {width: 100vw !important;}
+    .panel-body {width: 90vw !important;}
 }
 </style>
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
     <div class="panel-heading">
         Timestamp
     </div>
-    <div class="panel-body" style="width: 30vw" >
+    <div class="panel-body" style="width: 30vw; margin: 0px auto;" >
         <form role="form" action="/timestamp" method="GET">
             <div class="input-group">
                 {% if timestamp %}
