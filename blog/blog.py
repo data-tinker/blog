@@ -13,7 +13,7 @@ def year_count():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', hello="hello")
 
 @app.route('/tutorial')
 def tutorial():
@@ -22,6 +22,27 @@ def tutorial():
 @app.route('/hi.json')
 def json_test():
     return json_response({'name': 'Alex', 'message': 'hi!'}, status_code=201)
+
+@app.route('/select')
+def select():
+    return render_template('select.html')
+
+@app.route('/_select')
+def _select():
+    selected = request.args.get('data')
+    return jsonify(result=selected)
+
+@app.route('/robots.txt')
+def robots_txt():
+    return app.send_static_file('robots.txt')
+
+@app.route('/button', methods=['GET', 'POST'])
+def button():
+    if request.method == 'GET':
+        return render_template('button.html')
+    elif request.method == 'POST':
+        button_state = 'Pressed' if request.form.get('button_state') == 'true' else 'Not Pressed'
+        return render_template('button.html', button_state=button_state)
 
 @app.route('/timestamp')
 def timestamp_render():

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block additional_scripts %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<script>
+$(document).ready(function () {
+    bootstrap_alert = function (message) {
+        $('#error').remove();
+        $('#error-wrapper').html('<div id="error"><div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong> ' + message + '</div></div>');
+        $('#error').delay(6000).fadeOut(400);
+    };
+});
+
+window.onload = function () {
+    $('.panel').show();
+    $('#data_button').click(function() {
+        console.log($('#button_state').val());
+        if ($('#button_state').val() == 'false') {
+            $('#button_state').val('true');
+        } else if ($('#button_state').val() == 'true') {
+            $('#button_state').val('false');
+        }
+    });
+};
+</script>
+
+<style>
+.filter-option {
+    text-align: center !important;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
+    float: left;
+    width: calc(100% - 74px) !important;
+}
+
+#form__select-wrapper .dropdown-toggle {
+    outline: none !important;
+}
+
+#result:focus {
+}
+
+#form-wrapper {
+    max-width: 450px;
+}
+
+.clear {
+    clear: both;
+}
+
+.alert {
+    padding: 10px !important;
+    margin-bottom: 0 !important;
+}
+
+#error-wrapper {
+    margin-top: 5px;
+    width: 100%;
+}
+
+.btn-default {
+    outline: none !important;
+}
+
+.btn-default:hover, input[type=text]:hover {
+    background-color: white;
+}
+
+.btn-default.active, .btn-default:target, .btn-default.active:hover, .btn-default.active:target, .open>.dropdown-toggle.btn-default, input[type=text]:focus {
+    background-color: white !important;
+    border-color: #0275d8 !important;
+    box-shadow: none;
+}
+
+
+.btn-default:focus {
+    background-color: white !important;
+    border-color: #ccc;
+    box-shadow: none;
+}
+
+.btn-default:active, .dropdown-toggle:active, .actions-btn:active {
+    border-color: #d9534f !important;
+    background-color: white !important;
+    box-shadow: none;
+}
+
+.alert-danger {
+    border-color:#d9534f;
+    color: #444444;
+    background-color: white;
+}
+
+.close {
+    margin-top: -2px !important;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
+    .panel-body {width: 90vw !important;}
+}
+</style>
+<div class="panel panel-default" id="panel-wrapper" style="margin: 0 auto; display:none;">
+    <div class="panel-heading">
+        Button / Post
+    </div>
+    <div class="panel-body" id="form-wrapper" style="margin: 0px auto; text-align: center">
+        <form role="form" id="main-form" action="/button" method="POST">
+            <button type="button" class="btn btn-default" id="data_button" name="data_button" data-toggle="button" style="width: calc(100% - 75px); float: left;">Press Me</button>
+            <button type="submit" class="btn btn-default" id="submit_button" name="submit_button" style="float: right">Submit</button>
+            <input name="button_state" type="text" id="button_state" value="false" style="display: none">
+            <br><br>
+            {% if button_state %}
+                <input type="text" style="outline: none !important; box-shadow:none !important; height: 33px; text-align: center" class="form-control" id="result" name="result" value="{{ button_state }}">
+            {% else %}
+                <input type="text" style="outline: none !important; box-shadow:none !important; height: 33px;" class="form-control" id="result" name="result">
+            {% endif %}
+        </form>
+        <div class="clear"></div>
+        <div id="error-wrapper">
+        </div>
+    </div>
+</div>
+{% endblock %}

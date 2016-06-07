@@ -9,6 +9,10 @@ $(document).ready(function () {
 </script>
 
 <style>
+.panel-body {
+    max-width: 450px;
+}
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
     .panel-body {width: 90vw !important;}
 }
@@ -16,22 +20,20 @@ $(document).ready(function () {
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        Timestamp
+        Timestamp / Get
     </div>
-    <div class="panel-body" style="width: 30vw; margin: 0px auto;" >
+    <div class="panel-body" style="margin: 0px auto;" >
         <form role="form" action="/timestamp" method="GET">
-            <div class="input-group">
+            <div style="display: inline-block; width: 100%">
                 {% if timestamp %}
-                    <input type="text" class="form-control" id="timestamp" name="value" placeholder="timestamp" value={{ timestamp }}>
+                    <input type="text" class="form-control" id="timestamp" name="value" placeholder="timestamp" value={{ timestamp }} style="width: calc(100% - 74px); float: left">
                 {% else %}
-                    <input type="text" class="form-control" id="timestamp" name="value" placeholder="timestamp">
+                    <input type="text" class="form-control" id="timestamp" name="value" placeholder="timestamp" style="width: calc(100% - 74px); float: left">
                 {% endif %}
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-default" id="submit_button">Submit</button>
-                </span>
+                <button type="submit" class="btn btn-default" id="submit_button" style="float: right">Submit</button>
             </div>
-        </form>
         <input type="text" class="form-control" id="result" name="result" placeholder="result" >
+        </form>
     </div>
 </div>
 {% endblock %}

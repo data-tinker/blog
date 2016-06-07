@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block additional_scripts %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<script>
+$(document).ready(function () {
+    jQuery.ajaxSettings.traditional = true;
+    $(function() {
+        $('#button-submit').bind('click', function() {
+            $.getJSON('/_select', {
+                data: JSON.stringify($('#select_values').val()),
+            }, function(data) {
+                $('#result').val(JSON.parse(data.result));
+            }).error(function() {
+                bootstrap_alert('Error in Ajax request!');
+            });
+            return false;
+        });
+    });
+
+    $('#option_300').on('click', function(e) {
+        $('#select_values').empty();
+        $('#select_values').selectpicker('refresh');
+        for (var i = 1; i <= 300; i++) {
+            $('#select_values').append('<option>' + i + '</option>');
+        }
+        $('#select_values').selectpicker('refresh');
+    });
+
+    $('#option_500').on('click', function(e) {
+        $('#select_values').empty();
+        $('#select_values').selectpicker('refresh');
+        for (var i = 1; i <= 500; i++) {
+            $('#select_values').append('<option>' + i + '</option>');
+        }
+        $('#select_values').selectpicker('refresh');
+    });
+
+    $('#option_300').trigger('click');
+
+    bootstrap_alert = function (message) {
+        $('#error').remove();
+        $('#error-wrapper').html('<div id="error"><div class="alert alert-danger" style="border-color:#ccc"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong> ' + message + '</div></div>');
+        $('#error').delay(6000).fadeOut(400);
+    };
+});
+
+window.onload = function () {
+    $('.panel').show();
+};
+</script>
+
+<style>
+.filter-option {
+    text-align: center !important;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
+    float: left;
+    width: calc(100% - 74px) !important;
+}
+
+#form__select-wrapper .dropdown-toggle {
+    outline: none !important;
+}
+
+#result:focus {
+}
+
+#form-wrapper {
+    max-width: 450px;
+}
+
+.clear {
+    clear: both;
+}
+
+.alert {
+    padding: 10px !important;
+    margin-bottom: 0 !important;
+}
+
+#error-wrapper {
+    margin-top: 5px;
+    width: 100%;
+}
+
+.btn-default {
+    outline: none !important;
+}
+
+.btn-default:hover, input[type=text]:hover {
+    background-color: white;
+}
+
+.btn-default.active, .btn-default:target, .btn-default.active:hover, .btn-default.active:target, .open>.dropdown-toggle.btn-default, input[type=text]:focus, .btn-default:focus  {
+    background-color: white !important;
+    border-color: #66afe9 !important;
+    box-shadow: none;
+}
+
+
+.btn-default:active, .dropdown-toggle:active, .actions-btn:active {
+    border-color: #f0ad4e !important;
+    background-color: white !important;
+    box-shadow: none;
+}
+
+.alert-danger {
+    border-color:#d9534f;
+    color: #333333;
+    background-color: white;
+}
+
+.close {
+    margin-top: -2px !important;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
+    .panel-body {width: 90vw !important;}
+}
+</style>
+
+<div class="panel panel-default" id="panel-wrapper" style="margin: 0 auto; display:none;">
+    <div class="panel-heading">
+        Select / Ajax
+    </div>
+    <div class="panel-body" id="form-wrapper" style="margin: 0px auto; text-align: center">
+        <form role="form" id="main-form">
+            <div class="left-panel" style="float: left;">
+                <div class="btn-group btn-group-vertical" data-toggle="buttons">
+                    <label class="btn btn-default" id="option_300" style="border-radius: 4px;">
+                        <input type="radio" autocomplete="off"> 300
+                    </label>
+                    <label class="btn btn-default" id="option_500" style="margin-top: 5px; border-radius: 4px;">
+                        <input type="radio" autocomplete="off"> 500
+                    </label>
+                </div>
+            </div>
+            <div class="right-panel" style="float: right; width: calc(100% - 55px)">
+                <div style="display: inline-block; width: 100%; height: 33px" id="form__select-wrapper">
+                    <select class="selectpicker text-centered" id="select_values" style="outline: none !important; box-shadow:none !important" multiple id="form__select" data-actions-box="true">
+                    </select>
+                    <button type="submit" class="btn btn-default" style="outline: none !important;float: right" href="javascript:void();" id="button-submit">Submit</button>
+                </div>
+                <div style="display: inline-block; width: 100%; margin-top: -1px;">
+                     <input type="text" style="outline: none !important; box-shadow:none !important; height: 33px;" class="form-control" id="result">
+                </div>
+            </div>
+        </form>
+        <div class="clear"></div>
+        <div id="error-wrapper">
+        </div>
+    </div>
+</div>
+{% endblock %}
